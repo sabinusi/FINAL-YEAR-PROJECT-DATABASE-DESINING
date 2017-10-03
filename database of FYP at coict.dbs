@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="hjhj" id="Project_4e3eece" template="Default" database="MySql" >
+	<layout name="Layout" id="Layout_32a9fb7" show_relation="columns" />
+</project>
