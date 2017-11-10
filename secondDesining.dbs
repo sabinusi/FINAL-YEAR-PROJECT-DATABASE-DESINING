@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="hjhj" id="Project_4e3eece" template="Default" database="MySql" >
+	<schema name="fypms" schemaname="fypms" >
+		<table name="coordinator" >
+			<column name="name" type="varchar" length="100" jt="12" />
+			<column name="empl_id" type="int" jt="4" mandatory="y" />
+			<column name="email" type="varchar" length="100" jt="12" />
+			<column name="profile_pic" type="varchar" length="100" jt="12" />
+			<column name="password" type="varchar" length="100" jt="12" />
+			<column name="role" type="varchar" length="100" jt="12" />
+			<index name="pk_coordinator" unique="PRIMARY_KEY" >
+				<column name="empl_id" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cord_annucements" >
+			<column name="id" type="int" jt="4" mandatory="y" />
+			<column name="title" type="varchar" length="100" jt="12" />
+			<column name="descriptions" type="varchar" length="1000" jt="12" />
+			<column name="cor_emply_id" type="varchar" length="100" jt="12" />
+			<index name="pk_cord_annucements" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_cord_annucements" unique="NORMAL" >
+				<column name="cor_emply_id" />
+			</index>
+			<fk name="fk_cord_annucements" to_schema="fypms" to_table="coordinator" >
+				<fk_column name="cor_emply_id" pk="empl_id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="group_projec" />
+		<table name="group_project" />
+		<table name="groups" />
+		<table name="student" >
+			<column name="registration_no" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="firstname" type="varchar" length="100" jt="12" />
+			<column name="lastname" type="varchar" length="100" jt="12" />
+			<column name="profilepicture" type="tinyblob" jt="-4" />
+			<column name="supervisor_emp_id" type="int" jt="4" />
+			<column name="group_no" type="int" jt="4" />
+			<column name="email" type="varchar" length="100" jt="12" />
+			<column name="password" type="varchar" length="100" jt="12" />
+			<column name="role" type="varchar" length="100" jt="12" />
+			<column name="proposed_supervisor_empl_id" type="varchar" length="100" jt="12" />
+			<index name="pk_student" unique="PRIMARY_KEY" >
+				<column name="registration_no" />
+			</index>
+			<index name="idx_student" unique="NORMAL" >
+				<column name="group_no" />
+			</index>
+			<fk name="fk_student_student_messages" to_schema="fypms" to_table="student_messages" delete_action="cascade" >
+				<fk_column name="registration_no" pk="student_reg_no" />
+			</fk>
+			<fk name="fk_student_student_project" to_schema="fypms" to_table="student_single_project" >
+				<fk_column name="registration_no" pk="student_reg_no" />
+			</fk>
+			<fk name="fk_student_student_groups" to_schema="fypms" to_table="student_groups" >
+				<fk_column name="group_no" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="student_group_proje" >
+			<column name="group_id" type="int" jt="4" />
+			<column name="sem1_progress" type="varchar" length="100" jt="12" />
+			<column name="sem1_final" type="varchar" length="100" jt="12" />
+			<column name="sem2_progress" type="varchar" length="100" jt="12" />
+			<column name="sem2_final" type="varchar" length="100" jt="12" />
+			<column name="title" type="varchar" length="200" jt="12" />
+			<column name="concept_note" type="varchar" length="600" jt="12" />
+			<column name="sem1_progress_marks" type="int" jt="4" />
+			<column name="sem1_final_marks" type="int" jt="4" />
+			<column name="sem2_progress_marks" type="int" jt="4" />
+			<column name="sem2_final_marks" type="int" jt="4" />
+			<index name="idx_group_proje" unique="NORMAL" >
+				<column name="group_id" />
+			</index>
+			<fk name="fk_group_proje_student_groups" to_schema="fypms" to_table="student_groups" >
+				<fk_column name="group_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="student_groups" >
+			<column name="first_member_reg_no" type="varchar" length="100" jt="12" />
+			<column name="second_member_reg_no" type="varchar" length="100" jt="12" />
+			<column name="third_member_reg_no" type="varchar" length="100" jt="12" />
+			<column name="id" type="int" jt="4" mandatory="y" />
+			<index name="pk_student_groups" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="student_messages" >
+			<column name="student_reg_no" type="varchar" length="100" jt="12" />
+			<column name="messages_from_supervisor" type="varchar" length="500" jt="12" />
+			<column name="message_from_coordianator" type="varchar" length="500" jt="12" />
+			<index name="pk_student_messages" unique="UNIQUE" >
+				<column name="student_reg_no" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="student_single_groups" >
+			<column name="student_single_project_id" type="int" jt="4" />
+			<column name="supervisor_employee_id" type="varchar" length="100" jt="12" />
+			<index name="idx_student_single_groups" unique="NORMAL" >
+				<column name="supervisor_employee_id" />
+			</index>
+			<fk name="fk_student_single_groups" to_schema="fypms" to_table="supervisor" >
+				<fk_column name="supervisor_employee_id" pk="em_id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="student_single_project" >
+			<column name="sem_progress" type="varchar" length="100" jt="12" />
+			<column name="sem1_final" type="varchar" length="100" jt="12" />
+			<column name="sem2_progress" type="varchar" length="100" jt="12" />
+			<column name="sem2_final" type="varchar" length="100" jt="12" />
+			<column name="student_reg_no" type="varchar" length="100" jt="12" />
+			<column name="concept_note" type="varchar" length="100" jt="12" />
+			<column name="title" type="varchar" length="100" jt="12" />
+			<column name="id" type="int" jt="4" mandatory="y" />
+			<column name="sem1_progress_marks" type="int" jt="4" />
+			<column name="sem1_final_marks" type="int" jt="4" />
+			<column name="sem2_progress_marks" type="int" jt="4" />
+			<column name="sem2_final_marks" type="int" jt="4" />
+			<index name="pk_student_project" unique="UNIQUE" >
+				<column name="student_reg_no" />
+			</index>
+			<index name="pk_student_single_project" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="submited_reports" />
+		<table name="supervisor" >
+			<column name="em_id" type="int" jt="4" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<column name="email" type="varchar" length="100" jt="12" />
+			<column name="expertise" type="varchar" length="100" jt="12" />
+			<column name="office_number" type="varchar" length="100" jt="12" />
+			<column name="profile_pic" type="varchar" length="100" jt="12" />
+			<column name="role" type="varchar" length="100" jt="12" />
+			<index name="pk_supervisor" unique="PRIMARY_KEY" >
+				<column name="em_id" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="supervisor_messages" >
+			<column name="message_from_student" type="varchar" length="100" jt="12" />
+			<column name="student_reg_no" type="varchar" length="100" jt="12" />
+			<column name="supervisor_employee_id" type="varchar" length="100" jt="12" />
+			<column name="student_ title" type="varchar" length="100" jt="12" />
+			<index name="idx_supervisor_messages" unique="NORMAL" >
+				<column name="supervisor_employee_id" />
+			</index>
+			<fk name="fk_supervisor_messages" to_schema="fypms" to_table="supervisor" >
+				<fk_column name="supervisor_employee_id" pk="em_id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="supervisor_received_concepts_from_groups" >
+			<column name="student_group_id" type="int" jt="4" />
+			<column name="supervisor_em_id" type="varchar" length="100" jt="12" />
+			<column name="recomandations" type="varchar" length="100" jt="12" />
+			<index name="idx_supervisor_received_concepts" unique="NORMAL" >
+				<column name="supervisor_em_id" />
+			</index>
+			<fk name="fk_supervisor_received_concepts" to_schema="fypms" to_table="supervisor" >
+				<fk_column name="supervisor_em_id" pk="em_id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="supervisor_student_groups" >
+			<column name="student_group_id" type="int" jt="4" />
+			<column name="supervisor_employee_id" type="varchar" length="100" jt="12" />
+			<index name="idx_supervisor_student_groups" unique="NORMAL" >
+				<column name="supervisor_employee_id" />
+			</index>
+			<fk name="fk_supervisor_student_groups" to_schema="fypms" to_table="supervisor" >
+				<fk_column name="supervisor_employee_id" pk="em_id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="supervispr_received_concept_from_single_members" >
+			<column name="student_single_project_id" type="int" jt="4" />
+			<column name="supervisor_em_id" type="varchar" length="100" jt="12" />
+			<column name="recomandations" type="varchar" length="100" jt="12" />
+			<index name="idx_supervispr_received_from_single_members" unique="NORMAL" >
+				<column name="supervisor_em_id" />
+			</index>
+			<fk name="fk_supervispr_received_from_single_members" to_schema="fypms" to_table="supervisor" >
+				<fk_column name="supervisor_em_id" pk="em_id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="table_" />
+	</schema>
+	<connector name="" database="MySql" host="localhost" port="3306" user="root" />
+	<layout name="Layout" id="Layout_32a9fb7" show_relation="columns" >
+		<entity schema="fypms" name="student_groups" color="c1d8ee" x="315" y="45" />
+		<entity schema="fypms" name="student_messages" color="c1d8ee" x="60" y="255" />
+		<entity schema="fypms" name="supervisor_messages" color="c1d8ee" x="855" y="45" />
+		<entity schema="fypms" name="supervisor_student_groups" color="c1d8ee" x="900" y="210" />
+		<entity schema="fypms" name="coordinator" color="c1d8ee" x="150" y="465" />
+		<entity schema="fypms" name="cord_annucements" color="c1d8ee" x="345" y="465" />
+		<entity schema="fypms" name="supervisor" color="c1d8ee" x="720" y="45" />
+		<entity schema="fypms" name="supervisor_received_concepts_from_groups" color="c1d8ee" x="675" y="315" />
+		<entity schema="fypms" name="student" color="c1d8ee" x="45" y="45" />
+		<entity schema="fypms" name="student_single_project" color="c1d8ee" x="270" y="210" />
+		<entity schema="fypms" name="student_group_proje" color="c1d8ee" x="510" y="45" />
+		<entity schema="fypms" name="supervispr_received_concept_from_single_members" color="c1d8ee" x="510" y="420" />
+		<entity schema="fypms" name="student_single_groups" color="c1d8ee" x="675" y="225" />
+	</layout>
+</project>
